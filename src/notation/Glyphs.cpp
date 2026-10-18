@@ -1,5 +1,5 @@
 // Painter paths for notation symbols.
-// Milestone 1 draws the brace, treble clef, and bass clef.
+// Clefs, the brace, and the quarter note (filled head and stem).
 // Coordinates below are staff spaces with y growing downward, except the brace,
 // which is already in pixels.
 
@@ -191,6 +191,43 @@ void paintBassClef(QPainter& painter, const QColor& ink, QPointF fLine, qreal st
     constexpr qreal kDotRadius = 0.19;
     painter.drawEllipse(QPointF(2.12, -0.50), kDotRadius, kDotRadius);
     painter.drawEllipse(QPointF(2.12, 0.50), kDotRadius, kDotRadius);
+    painter.restore();
+}
+
+void paintQuarterNote(QPainter& painter, const QColor& ink, QPointF head, qreal staffSpace, bool stemUp) {
+    const qreal headW = staffSpace * 1.28;
+    const qreal headH = staffSpace * 0.95;
+    const qreal stemX = head.x() + (stemUp ? headW * 0.46 : -headW * 0.46);
+    const qreal stemLength = staffSpace * 3.5;
+    const qreal stemEndY = head.y() + (stemUp ? -stemLength : stemLength);
+
+    painter.save();
+    painter.setRenderHint(QPainter::Antialiasing, true);
+    QPen stem(ink, 1.7);
+    stem.setCapStyle(Qt::FlatCap);
+    painter.setPen(stem);
+    painter.drawLine(QPointF(stemX, head.y()), QPointF(stemX, stemEndY));
+
+    painter.translate(head);
+    painter.rotate(-18.0);
+    painter.setPen(Qt::NoPen);
+    painter.setBrush(ink);
+    painter.drawEllipse(QRectF(-headW * 0.5, -headH * 0.5, headW, headH));
+    painter.restore();
+}
+
+void paintNoteSelection(QPainter& painter, const QColor& color, QPointF head, qreal staffSpace) {
+    const qreal headW = staffSpace * 1.28 + 6.0;
+    const qreal headH = staffSpace * 0.95 + 6.0;
+
+    painter.save();
+    painter.translate(head);
+    painter.rotate(-18.0);
+    painter.setRenderHint(QPainter::Antialiasing, true);
+    QPen pen(color, 2.0);
+    painter.setPen(pen);
+    painter.setBrush(Qt::NoBrush);
+    painter.drawEllipse(QRectF(-headW * 0.5, -headH * 0.5, headW, headH));
     painter.restore();
 }
 

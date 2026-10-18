@@ -1,8 +1,9 @@
 // Main window for Nota.
-// Milestone 1 owns the notation view only: no menus, toolbar, or document.
+// Owns the document and the notation view. No menus or toolbar yet.
 
 #include "ui/MainWindow.h"
 
+#include "model/Document.h"
 #include "notation/Layout.h"
 #include "notation/NotationView.h"
 
@@ -13,8 +14,10 @@ namespace nota {
 MainWindow::MainWindow(QWidget* parent) : QMainWindow(parent) {
     setWindowTitle(QStringLiteral("Nota"));
 
-    auto* view = new NotationView(this);
+    auto* document = new Document(this);
+    auto* view = new NotationView(document, this);
     setCentralWidget(view);
+    view->setFocus();
 
     QPalette pal = palette();
     pal.setColor(QPalette::Window, kPaper);

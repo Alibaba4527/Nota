@@ -1,5 +1,5 @@
 // Main window for Nota.
-// Milestone 1 owns the notation view only: no menus, toolbar, or document.
+// Owns the document and the notation view. No menus or toolbar yet.
 
 #pragma once
 

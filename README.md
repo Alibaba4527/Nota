@@ -15,4 +15,10 @@ cmake --build build
 ./build/nota
 ```
 
+Model tests:
+
+```bash
+./build/tst_model
+```
+
 On macOS with Homebrew, pass `-DCMAKE_PREFIX_PATH="$(brew --prefix qt)"` if CMake does not find Qt. On Windows the executable is `build\nota.exe`, or `build\Debug\nota.exe` with a multi-config generator.
